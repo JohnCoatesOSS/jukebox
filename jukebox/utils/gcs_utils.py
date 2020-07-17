@@ -28,8 +28,9 @@ def gs_upload(local_path, gs_path, async_upload=False):
         subprocess.call(args)
 
 def download(gs_path, local_path, async_download=False):
+    print("downloading " + gs_path)
     remote_path = gs_path.replace("gs://", "https://storage.googleapis.com/")
-    args = ['wget', '-q', '-O', local_path, remote_path]
+    args = ['aria2c', '-s16', '-x16', '--out', local_path, remote_path]
     if async_download:
         subprocess.Popen(args)
     else:
